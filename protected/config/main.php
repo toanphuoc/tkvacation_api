@@ -21,13 +21,14 @@ return array(
             'password' => 'root',
             'charset' => 'utf8',
         ),
-    ),
-    'urlManager' => array(
-        'urlFormat'=>'path',
-        'rules' => array(
-            array('destination/list', 'pattern' => 'destination/<action:\w+>', 'verb' => 'GET'),
-            '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+        'urlManager'=>array(
+            'urlFormat'=>'path',
+            'showScriptName' => false,
+            'rules'=>array(
+                array('<controller>/<action>/<id:\d+>', 'pattern'=>'<controller:\w+>/<action:\w+>/<id:\d+>', 'verb'=>'GET'),
+                // array('<controller>/<action>/<id:\d+>', 'pattern'=>'<controller:\w+>/<action:\w+>/<id:\d+>', 'verb'=>'GET'),
+                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+            )
         ),
     ),
-
 );

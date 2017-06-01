@@ -16,11 +16,8 @@ class SiteController extends CController
      */
     public function actionIndex()
     {
-        // $data = array('api'=>'test success');
-        // echo json_encode($data);
-        // exit;
-        $models = Destinations::model()->findAll();
-        echo json_encode($models);
+        // $models = Destinations::model()->findAll();
+        // echo json_encode($models);
 
     }
 }
