@@ -27,6 +27,14 @@ class Destinations extends CActiveRecord
 		return Destinations::model()->findAll($criteria);
 	}
 
+	public function getDestinationById($id){
+		return Destinations::model()->findByPk($id);
+	}
+
+	public function getOtherDestination($id){
+		return Destinations::model()->findAll('id != :id', array('id' => $id));
+	}
+
 	public function relations(){
 		return array('tours' => array(self::HAS_MANY, 'Tours', 'id'), );
 	}

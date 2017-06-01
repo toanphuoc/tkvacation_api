@@ -11,12 +11,18 @@ class TourController extends CController
 	}
 
 	public function actionGetTourByDestination(){
+		$tour = new Tours();
+		$destination = new Destinations();
+
 		$id = $_GET['id'];
 
-		$tour = new Tours();
 		$models = $tour->getTourInDestination($id);
+
+		$data = array('data' => $models, 'des' => $destination->getDestinationById($id));
+
+		
 		header('Content-Type: application/json');
-		echo json_encode($models);
+		echo json_encode($data);
 	}
 
 	public function actionGetPopularTour(){
