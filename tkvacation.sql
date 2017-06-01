@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: tkvacation
+-- Host: localhost    Database: tkvacation
 -- ------------------------------------------------------
--- Server version	5.6.23-log
+-- Server version	5.7.16-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -50,12 +50,14 @@ DROP TABLE IF EXISTS `tours`;
 CREATE TABLE `tours` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
-  `period` int(8) NOT NULL,
+  `period` varchar(45) NOT NULL,
   `availability` varchar(45) DEFAULT NULL,
   `overview` text,
-  `price` decimal(10,0) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
   `destination_id` int(11) DEFAULT NULL,
   `booking` int(11) DEFAULT '0',
+  `price_vnd` decimal(10,2) DEFAULT NULL,
+  `img` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_TOUR_DES_idx` (`destination_id`),
   CONSTRAINT `FK_TOURS_DES` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -68,13 +70,9 @@ CREATE TABLE `tours` (
 
 LOCK TABLES `tours` WRITE;
 /*!40000 ALTER TABLE `tours` DISABLE KEYS */;
-INSERT INTO `tours` VALUES (1,'Sapa',1,'abc','toadnas jdha',1000,1,0),(2,'Vung Tau',1,'abc','iadasdjkl',1000,1,0),(4,'Ha Long',3213,'eqwe','ded',100,2,0);
+INSERT INTO `tours` VALUES (1,'Mekong 1 day, Cai Lay','1 Day','2 Days','Enjoy full day at the local house and join their activities, a wish of so many people live at the busy city such at Saigon. This is a beautiful destination with less tourist.',200.00,1,0,5200000.00,'img/tour_1.jpg'),(2,'City full day','1 Day','1 Day','You will explore Saigon in deep 1 full day. Enjoy walking around the Chinese market and the park, have a talk with the guide at the local coffee shop.',100.00,1,0,2000000.00,'img/tour_2.jpg'),(4,'Ha Long','3213','eqwe','ded',100.00,2,0,NULL,NULL);
 /*!40000 ALTER TABLE `tours` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'tkvacation'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -85,4 +83,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-01 17:22:06
+-- Dump completed on 2017-06-02  0:14:03
