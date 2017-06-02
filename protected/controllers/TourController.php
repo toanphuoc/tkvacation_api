@@ -27,7 +27,7 @@ class TourController extends CController
 
 	public function actionGetPopularTour(){
 		$tour = new Tours();
-		$models = $tour->getPopularTour();
+		$models = $tour->getPopularTour(4);
 		header('Content-Type: application/json');
 		echo json_encode($models);
 	}
@@ -36,8 +36,15 @@ class TourController extends CController
 		$id = $_GET['id'];
 
 		$tour = new Tours();
+		$itinerary = new Itinerary();
+
+		$data = array();
+
 		$models = $tour->getTourById($id);
+
+		$data = array('tour' => $models, 'itinerary' => $itinerary->getItinerayOfTour($id));
+
 		header('Content-Type: application/json');
-		echo json_encode($models);
+		echo json_encode($data);
 	}
 }

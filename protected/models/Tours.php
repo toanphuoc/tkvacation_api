@@ -22,6 +22,8 @@ class Tours extends CActiveRecord{
 
 	public $img;
 
+	public $date_created;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -32,16 +34,20 @@ class Tours extends CActiveRecord{
 	}
 
 	public function getTourInDestination($destination_id){
-		$models = Tours::model()->findAll('destination_id = :id', array(':id' => $destination_id) );
+		$criteria=new CDbCriteria();
+		$criteria->order = 'date_created DESC';
+		$criteria->condition = "destination_id = :id";
+    	$criteria->params=(array(':id'=>$destination_id));
+		$models = Tours::model()->findAll($criteria);
 		return $models;
 	}
 
-	public function getPopularTour(){
+	public function getPopularTour($limit){
 
 		$criteria=new CDbCriteria();
 		$criteria->order='booking DESC';
-		$criteria->limit = 4;
-
+		$criteria->limit = $limit;
+		$criteria->order = 'date_created DESC';
 		$models = Tours::model()->findAll($criteria);
 		return $models;
 	}
