@@ -33,6 +33,21 @@ class Tours extends CActiveRecord{
 		return array('destination' => array(self::BELONGS_TO, 'Destinations', 'destination_id'),);
 	}
 
+	public function getList($pageSize, $currentPage){
+		$criteria = new CDbCriteria();
+		$criteria->order = 'date_created desc';
+		$count = Tours::model()->count($criteria);
+
+		$pages=new CPagination($count);
+		$pages->pageSize=$pageSize;
+		$pages->setCurrentPage($currentPage - 1);
+    	$pages->applyLimit($criteria);
+
+    	$model = Tours::model()->findAll($criteria);
+    	$page = array('totalPage' => $pages->getPageCount(), 'currentPage' => $pages->getCurrentPage() + 1);
+    	return array('tours' => $model, 'page' => $page);
+	}
+
 	public function getTourInDestination($destination_id){
 		$criteria=new CDbCriteria();
 		$criteria->order = 'date_created DESC';

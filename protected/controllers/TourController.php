@@ -5,9 +5,17 @@
 */
 class TourController extends CController
 {
-	
+	public $pageSize = 10;
+
 	public function actionIndex(){
 
+	}
+
+	public function actionGetList(){
+		$tours = new Tours();
+		$currentPage = $_GET['currenetPage'];
+		$models = $tours->getList(1, $currentPage);
+		echo json_encode($models);
 	}
 
 	public function actionGetTourByDestination(){

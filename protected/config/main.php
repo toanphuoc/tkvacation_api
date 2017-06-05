@@ -25,7 +25,17 @@ return array(
             'urlFormat'=>'path',
             'showScriptName' => false,
             'rules'=>array(
-                array('<controller>/<action>/<id:\d+>', 'pattern'=>'<controller:\w+>/<action:\w+>/<id:\d+>', 'verb'=>'GET'),
+                //API for tour
+                array('tour/getPopularTour', 'pattern'=>'tour/getPopularTour', 'verb'=>'GET'),
+                array('tour/getTourByDestination/<id:\d+>', 'pattern' => 'tour/getTourByDestination/<id:\d+>', 'verb' => 'GET'),
+                array('tour/getTourById/<id:\d+>', 'pattern' => 'tour/getTourById/<id:\d+>', 'verb' => 'GET'),
+                array('tour/getList/<currenetPage:\d+>', 'pattern' => 'tour/getList/<currenetPage:\d+>', 'verb' => 'GET'),
+
+                 //API for destination
+                array('destination/list', 'pattern' => 'destination/list', 'verb' => 'GET'),
+                array('destination/getOtherDestination/<id:\d+>', 'pattern' => 'destination/getOtherDestination/<id:\d+>', 'verb' => 'GET'),
+                array('destination/getPopularDestination', 'pattern' => 'destination/getPopularDestination', 'verb' => 'GET'),
+                // array('<controller>/<action>/<currenetPage:\d+>', 'pattern' => '<controller:\w+>/<action:\w+>/<currenetPage:\d+>', 'verb' => 'GET'),
                 // array('<controller>/<action>/<id:\d+>', 'pattern'=>'<controller:\w+>/<action:\w+>/<id:\d+>', 'verb'=>'GET'),
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             )
