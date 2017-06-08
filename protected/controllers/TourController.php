@@ -14,7 +14,7 @@ class TourController extends CController
 	public function actionGetList(){
 		$tours = new Tours();
 		$currentPage = $_GET['currenetPage'];
-		$models = $tours->getList(1, $currentPage);
+		$models = $tours->getList(5, $currentPage);
 		echo json_encode($models);
 	}
 
