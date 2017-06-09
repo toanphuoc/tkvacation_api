@@ -30,6 +30,8 @@ return array(
                 array('tour/getTourByDestination/<id:\d+>', 'pattern' => 'tour/getTourByDestination/<id:\d+>', 'verb' => 'GET'),
                 array('tour/getTourById/<id:\d+>', 'pattern' => 'tour/getTourById/<id:\d+>', 'verb' => 'GET'),
                 array('tour/getList/<currenetPage:\d+>', 'pattern' => 'tour/getList/<currenetPage:\d+>', 'verb' => 'GET'),
+                array('tour/searchTour?keySearch=<keySearch:\w+>&desId=<desId:\d+>&periodMin=<pMin:\d+>&periodMax=<pMax:\d+>&priceMin=<priceMin:\d+>&priceMax=<priceMax:\d+>', 
+                    'pattern' => 'tour/searchTour?keySearch=<keySearch:\w+>&desId=<desId:\d+>&periodMin=<pMin:\d+>&periodMax=<pMax:\d+>&priceMin=<priceMin:\d+>&priceMax=<priceMax:\d+>', 'verb' => 'GET'),
 
                  //API for destination
                 array('destination/list', 'pattern' => 'destination/list', 'verb' => 'GET'),

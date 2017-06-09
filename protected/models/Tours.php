@@ -33,6 +33,19 @@ class Tours extends CActiveRecord{
 		return array('destination' => array(self::BELONGS_TO, 'Destinations', 'destination_id'),);
 	}
 
+	public function search($key, $destination_id, $periodMin, $periodMax, $priceMin, $priceMax){
+		$sql = "CALL searchTour(:key, :desId, :periodMin, :periodMax, :priceMin, :priceMax)";
+		$data = Yii::app()->db->createCommand($sql)->bindValue('key', $key)
+											->bindValue('desId', $destination_id)
+											->bindValue('periodMin', $periodMin)
+											->bindValue('periodMax', $periodMax)
+											->bindValue('priceMin', $priceMin)
+											->bindValue('priceMax', $priceMax)->queryAll();
+		$count = count($data);
+		
+		return $data;
+	}
+
 	public function getList($pageSize, $currentPage){
 		$criteria = new CDbCriteria();
 		$criteria->order = 'date_created desc';

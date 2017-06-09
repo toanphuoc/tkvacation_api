@@ -11,6 +11,51 @@ class TourController extends CController
 
 	}
 
+	public function actionSearchTour(){
+
+		if(isset($_GET['keySearch'])){
+			$keySearch = $_GET["keySearch"];
+		}else{
+			$keySearch = NULL;
+		}
+
+		if(isset($_GET['desId'])){
+			$desId = $_GET["desId"];
+		}else{
+			$desId = NULL;
+		}
+
+		if(isset($_GET['periodMin'])){
+			$pMin = $_GET["periodMin"];
+		}else{
+			$pMin = NULL;
+		}
+
+		if(isset($_GET['periodMax'])){
+			$pMax = $_GET["periodMax"];
+		}else{
+			$pMax = NULL;
+		}
+
+		if(isset($_GET['priceMin'])){
+			$priceMin = $_GET["priceMin"];
+		}else{
+			$priceMin = NULL;
+		}
+
+		if(isset($_GET['priceMax'])){
+			$priceMax = $_GET["priceMax"];
+		}else{
+			$priceMax = NULL;
+		}
+		
+
+		$tour = new Tours();
+		$data = $tour->search($keySearch, $desId, $pMin, $pMax, $priceMin, $priceMax);
+		header('Content-Type: application/json');
+		echo json_encode($data);
+	}
+
 	public function actionGetList(){
 		$tours = new Tours();
 		$currentPage = $_GET['currenetPage'];
