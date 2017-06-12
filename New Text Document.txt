@@ -14,3 +14,13 @@ BEGIN
     and case when argPriceMax is not null then price <= argPriceMax else true end 
     order by date_created desc;
 END
+
+
+CREATE TABLE `contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `number` varchar(45) NOT NULL,
+  `email` varchar(256) NOT NULL,
+  `message` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

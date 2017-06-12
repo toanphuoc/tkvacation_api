@@ -39,6 +39,9 @@ return array(
                 array('destination/getPopularDestination', 'pattern' => 'destination/getPopularDestination', 'verb' => 'GET'),
                 // array('<controller>/<action>/<currenetPage:\d+>', 'pattern' => '<controller:\w+>/<action:\w+>/<currenetPage:\d+>', 'verb' => 'GET'),
                 // array('<controller>/<action>/<id:\d+>', 'pattern'=>'<controller:\w+>/<action:\w+>/<id:\d+>', 'verb'=>'GET'),
+
+                //API for Contact
+                array('contact/create', 'pattern' => 'contact/create', 'verb' => 'POST'),
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             )
         ),
