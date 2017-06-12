@@ -42,6 +42,9 @@ return array(
 
                 //API for Contact
                 array('contact/create', 'pattern' => 'contact/create', 'verb' => 'POST'),
+
+                //API for Customize Tour
+                array('customizetour/create', 'pattern' => 'customizetour/create', 'verb' => 'POST'),
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             )
         ),

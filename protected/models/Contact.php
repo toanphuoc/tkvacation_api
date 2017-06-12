@@ -5,16 +5,6 @@
 */
 class Contact extends CActiveRecord
 {
-	
-	// public $id;
-
-	// public $name;
-
-	// public $number;
-
-	// public $email;
-
-	// public $message;
 
 	public static function model($className=__CLASS__)
 	{
