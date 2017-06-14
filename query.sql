@@ -23,7 +23,7 @@ CREATE TABLE `contact` (
   `email` varchar(256) NOT NULL,
   `message` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+);
 
 ALTER TABLE `tkvacation`.`contact` 
 ADD COLUMN `is_read` BIT(1) NULL DEFAULT false AFTER `message`;
@@ -40,5 +40,27 @@ CREATE TABLE `tkvacation`.`customize_tour` (
   `estimate_duration` INT(11) NULL,
   `ideas` TEXT NULL,
   PRIMARY KEY (`id`));
+
+
+SELECT * FROM tkvacation.customize_tour;CREATE TABLE `booking` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tour_id` int(11) NOT NULL,
+  `start_date` varchar(100) DEFAULT NULL,
+  `number_of_people` int(11) DEFAULT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone` varchar(100) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `note` text,
+  PRIMARY KEY (`id`),
+  KEY `FK_BOOKING_TOUR_idx` (`tour_id`),
+  CONSTRAINT `FK_BOOKING_TOUR` FOREIGN KEY (`tour_id`) REFERENCES `tours` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tkvacation`.`booking` 
+ADD COLUMN `is_check` BIT(1) NULL DEFAULT false AFTER `note`;
+
+
 
 

@@ -45,6 +45,9 @@ return array(
 
                 //API for Customize Tour
                 array('customizetour/create', 'pattern' => 'customizetour/create', 'verb' => 'POST'),
+
+                //API for booking
+                array('booking/create', 'pattern' => 'booking/create', 'verd' => 'POST'),
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             )
         ),

@@ -11,7 +11,8 @@ class Customize_Tour extends CActiveRecord
 		return parent::model($className);
 	}
 
-	public function attributeLabels(){
+	public function attributeLabels()
+	{
 		return array(
 			'id' => 'Id',
 			'name' => 'Name',
@@ -25,7 +26,8 @@ class Customize_Tour extends CActiveRecord
 		);
 	}
 
-	public function rules(){
+	public function rules()
+	{
 		return array(
 			array('name, email, phone_number, nationality, destination, estimate_date_start, estimate_duration', 'required'),);
 	}
