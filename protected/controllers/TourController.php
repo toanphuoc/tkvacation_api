@@ -13,45 +13,41 @@ class TourController extends CController
 
 	public function actionSearchTour(){
 
-		if(isset($_GET['keySearch'])){
-			$keySearch = $_GET["keySearch"];
-		}else{
-			$keySearch = NULL;
-		}
+		$currentPage = (isset($_GET['page']) ? $_GET['page'] : 1);
+		$keySearch = isset($_GET['keySearch']) && $_GET['keySearch'] != 'undefined' ? $_GET['keySearch'] : NULL;
 
-		if(isset($_GET['desId'])){
+		if(isset($_GET['desId']) && $_GET['desId'] != 'undefined'){
 			$desId = $_GET["desId"];
 		}else{
 			$desId = NULL;
 		}
 
-		if(isset($_GET['periodMin'])){
+		if(isset($_GET['periodMin']) && $_GET['periodMin'] != 'undefined'){
 			$pMin = $_GET["periodMin"];
 		}else{
 			$pMin = NULL;
 		}
 
-		if(isset($_GET['periodMax'])){
+		if(isset($_GET['periodMax']) && $_GET['periodMax'] != 'undefined'){
 			$pMax = $_GET["periodMax"];
 		}else{
 			$pMax = NULL;
 		}
 
-		if(isset($_GET['priceMin'])){
+		if(isset($_GET['priceMin']) && $_GET['priceMin'] != 'undefined'){
 			$priceMin = $_GET["priceMin"];
 		}else{
 			$priceMin = NULL;
 		}
 
-		if(isset($_GET['priceMax'])){
+		if(isset($_GET['priceMax']) && $_GET['priceMax'] != 'undefined'){
 			$priceMax = $_GET["priceMax"];
 		}else{
 			$priceMax = NULL;
 		}
-		
 
 		$tour = new Tours();
-		$data = $tour->search($keySearch, $desId, $pMin, $pMax, $priceMin, $priceMax);
+		$data = $tour->search($keySearch, $desId, $pMin, $pMax, $priceMin, $priceMax, $currentPage);
 		header('Content-Type: application/json');
 		echo json_encode($data);
 	}

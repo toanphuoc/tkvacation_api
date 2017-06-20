@@ -33,17 +33,37 @@ class Tours extends CActiveRecord{
 		return array('destination' => array(self::BELONGS_TO, 'Destinations', 'destination_id'),);
 	}
 
-	public function search($key, $destination_id, $periodMin, $periodMax, $priceMin, $priceMax){
-		$sql = "CALL searchTour(:key, :desId, :periodMin, :periodMax, :priceMin, :priceMax)";
+	public function search($key, $destination_id, $periodMin, $periodMax, $priceMin, $priceMax, $currentPage){
+
+
+		$sql = "CALL searchTour(:key, :desId, :periodMin, :periodMax, :priceMin, :priceMax, :limit, :offset)";
+
+		$sql_total_items = "CALL getTotalSearchTour(:key, :desId, :periodMin, :periodMax, :priceMin, :priceMax)";
+
+		$pageSize = 5;
+		$offset = ($currentPage - 1) * $pageSize;
+
+		$data_count = Yii::app()->db->createCommand($sql_total_items)->bindValue('key', $key)
+											->bindValue('desId', $destination_id)
+											->bindValue('periodMin', $periodMin)
+											->bindValue('periodMax', $periodMax)
+											->bindValue('priceMin', $priceMin)
+											->bindValue('priceMax', $priceMax)
+											->queryAll();
+
 		$data = Yii::app()->db->createCommand($sql)->bindValue('key', $key)
 											->bindValue('desId', $destination_id)
 											->bindValue('periodMin', $periodMin)
 											->bindValue('periodMax', $periodMax)
 											->bindValue('priceMin', $priceMin)
-											->bindValue('priceMax', $priceMax)->queryAll();
-		$count = count($data);
-		
-		return $data;
+											->bindValue('priceMax', $priceMax)
+											->bindValue('limit', $pageSize)
+											->bindValue('offset', $offset)
+											->queryAll();
+
+											$totalPage = count($data_count) / $pageSize;
+		$page = array('totalPage' => ceil($totalPage), 'currentPage' => intval($currentPage));
+    	return array('tours' => $data, 'page' => $page);
 	}
 
 	public function getList($pageSize, $currentPage){

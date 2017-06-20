@@ -3,9 +3,22 @@
 --RewriteCond %{REQUEST_FILENAME} !-d
 --RewriteRule . index.php [L]
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `searchTour`(in argkey varchar(45), in argDestinationId int, in argPeriodMin int , in argPeriodMax int , in argPriceMin int, in argPriceMax int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `searchTour`(in argkey varchar(45), in argDestinationId int, in argPeriodMin int , in argPeriodMax int , in argPriceMin int, in argPriceMax int, argLimit int, argOffset int)
 BEGIN
-	select * from tours where 
+  select * from tours where 
+    case when argKey is not null then upper(name) LIKE CONCAT('%', upper(argkey) , '%') else true end 
+    and  case when argDestinationId is not null then destination_id = argDestinationId else true end 
+    and case when argPeriodMin is not null then period >= argPeriodMin else true end 
+    and case when argPeriodMax is not null then period <= argPeriodMax else true end 
+    and case when argPriceMin is not null then price >= argPriceMin else true end 
+    and case when argPriceMax is not null then price <= argPriceMax else true end 
+    order by date_created desc 
+    limit argLimit offset argOffset;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTotalSearchTour`(in argkey varchar(45), in argDestinationId int, in argPeriodMin int , in argPeriodMax int , in argPriceMin int, in argPriceMax int)
+BEGIN
+  select * from tours where 
     case when argKey is not null then upper(name) LIKE CONCAT('%', upper(argkey) , '%') else true end 
     and  case when argDestinationId is not null then destination_id = argDestinationId else true end 
     and case when argPeriodMin is not null then period >= argPeriodMin else true end 

@@ -21,6 +21,9 @@ return array(
             'password' => 'root',
             'charset' => 'utf8',
         ),
+
+        
+
         'urlManager'=>array(
             'urlFormat'=>'path',
             'showScriptName' => false,
@@ -51,5 +54,8 @@ return array(
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             )
         ),
+        // 'params'=>array(
+        //     'listPerPage'=> 10,
+        // ),
     ),
 );
