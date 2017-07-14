@@ -117,3 +117,5 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-06-02 17:53:36
+ALTER TABLE `tkvacation`.`tours` 
+ADD COLUMN `price_detail` TEXT NULL AFTER `date_created`;

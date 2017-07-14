@@ -74,6 +74,29 @@ SELECT * FROM tkvacation.customize_tour;CREATE TABLE `booking` (
 ALTER TABLE `tkvacation`.`booking` 
 ADD COLUMN `is_check` BIT(1) NULL DEFAULT false AFTER `note`;
 
+ALTER TABLE `tkvacation`.`tours` 
+ADD COLUMN `price_detail` TEXT NULL AFTER `date_created`;
 
 
+----------------Phase 2----------------------------
+CREATE TABLE `tkvacation`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NULL,
+  `password` VARCHAR(255) NULL,
+  `salt` VARCHAR(45) NULL,
+  `last_login` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`));
+INSERT INTO `tkvacation`.`user` (`username`, `password`, `salt`) VALUES ('tkvacation', 'E8086D3C180DF9F906A543B074B819E54B2E64FA49CA43D0D16AB279D0901A56', 'Ximuoi123456');
 
+
+CREATE TABLE `tkvacation`.`token` (
+  `token` VARCHAR(256) NOT NULL,
+  `active_time` DATETIME NULL,
+  `user_id` INT(8) NULL,
+  PRIMARY KEY (`token`),
+  INDEX `FK_TOKEN_USER_idx` (`user_id` ASC),
+  CONSTRAINT `FK_TOKEN_USER`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `tkvacation`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

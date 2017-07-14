@@ -24,6 +24,8 @@ class Tours extends CActiveRecord{
 
 	public $date_created;
 
+	public $price_detail;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

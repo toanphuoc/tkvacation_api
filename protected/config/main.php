@@ -51,6 +51,9 @@ return array(
 
                 //API for booking
                 array('booking/create', 'pattern' => 'booking/create', 'verd' => 'POST'),
+
+                //API for login
+                array('user/login', 'pattern' => 'user/login', 'verd' => 'POST'),
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             )
         ),
