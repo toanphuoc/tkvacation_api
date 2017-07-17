@@ -100,3 +100,10 @@ CREATE TABLE `tkvacation`.`token` (
     REFERENCES `tkvacation`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+ALTER TABLE `tkvacation`.`contact` 
+ADD COLUMN `date_created` DATETIME NULL AFTER `is_read`;
+
+ALTER TABLE `tkvacation`.`contact` 
+CHANGE COLUMN `is_read` `is_read` BIT(1) NULL DEFAULT false ;
+

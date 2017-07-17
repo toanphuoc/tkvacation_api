@@ -40,11 +40,11 @@ return array(
                 array('destination/list', 'pattern' => 'destination/list', 'verb' => 'GET'),
                 array('destination/getOtherDestination/<id:\d+>', 'pattern' => 'destination/getOtherDestination/<id:\d+>', 'verb' => 'GET'),
                 array('destination/getPopularDestination', 'pattern' => 'destination/getPopularDestination', 'verb' => 'GET'),
-                // array('<controller>/<action>/<currenetPage:\d+>', 'pattern' => '<controller:\w+>/<action:\w+>/<currenetPage:\d+>', 'verb' => 'GET'),
-                // array('<controller>/<action>/<id:\d+>', 'pattern'=>'<controller:\w+>/<action:\w+>/<id:\d+>', 'verb'=>'GET'),
 
                 //API for Contact
                 array('contact/create', 'pattern' => 'contact/create', 'verb' => 'POST'),
+                array('contact/list?page=<page:\d+>', 'pattern' => 'contact/list?page=<page:\d+>', 'verd' => 'GET'),
+                array('contact/updateIsRead', 'pattern' => 'contact/updateIsRead', 'verd' => 'PUT'),
 
                 //API for Customize Tour
                 array('customizetour/create', 'pattern' => 'customizetour/create', 'verb' => 'POST'),
@@ -54,6 +54,7 @@ return array(
 
                 //API for login
                 array('user/login', 'pattern' => 'user/login', 'verd' => 'POST'),
+                array('user/logout', 'pattern' => 'user/logout', 'verd' => 'POST'),
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             )
         ),

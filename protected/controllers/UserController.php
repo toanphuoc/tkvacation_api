@@ -10,6 +10,31 @@ class UserController extends CController
 
 	}
 
+	public function actionLogout()
+	{	
+		$token = new Token();
+		$t = $_GET['token'];
+
+		if(!$token->isValidToken($t))
+        {
+            echo json_encode(array("message" => 'Token is invalid.'));
+            exit();
+        }
+
+		$model = Token::model()->findByPk($t);
+		if(is_null($model))
+		{
+			echo json_encode(array('status' => false, 'message' => 'Token is incorrect'));
+			exit();
+		}
+		else if($model->delete())
+		{
+			echo json_encode(array('status' => true, 'message' => 'Logout is successful'));
+			exit();
+		}
+		echo json_encode(array('status' => false, 'message' => 'Error'));
+	}
+
 	public function actionLogin()
 	{
 		$user = new User();
@@ -22,11 +47,7 @@ class UserController extends CController
 		header('Content-Type: application/json');
 		if(!is_null($objUser))
 		{
-			$passwordEncryted = hash('sha256', $password.$objUser->salt);
-			// echo $passwordEncryted;
-			// exit();
-
-			if(strcasecmp($passwordEncryted, $objUser->password) == 0)
+			if($objUser->validatePassword($password))
 			{
 				date_default_timezone_set("Asia/Ho_Chi_Minh");
 				$date = date("Y-m-d H:i:s");

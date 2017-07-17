@@ -42,4 +42,10 @@ class User extends CActiveRecord
 
 		return User::model()->findByAttributes(array('username' => $username), $criteria);
 	}
+
+	public function validatePassword($password)
+	{
+		$passwordEncryted = hash('sha256', $password.$this->salt);
+		return strcasecmp($passwordEncryted, $this->password) == 0;
+	}
 }
