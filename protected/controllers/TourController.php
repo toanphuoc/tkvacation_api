@@ -49,6 +49,8 @@ class TourController extends CController
 		$tour = new Tours();
 		$data = $tour->search($keySearch, $desId, $pMin, $pMax, $priceMin, $priceMax, $currentPage);
 		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 		echo json_encode($data);
 	}
 
@@ -62,6 +64,9 @@ class TourController extends CController
 		}
 		
 		$models = $tours->getList(5, $currentPage);
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 		echo json_encode($models);
 	}
 
@@ -77,6 +82,8 @@ class TourController extends CController
 
 		
 		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 		echo json_encode($data);
 	}
 
@@ -84,6 +91,8 @@ class TourController extends CController
 		$tour = new Tours();
 		$models = $tour->getPopularTour(4);
 		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 		echo json_encode($models);
 	}
 
@@ -100,6 +109,8 @@ class TourController extends CController
 		$data = array('tour' => $models, 'itinerary' => $itinerary->getItinerayOfTour($id));
 
 		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 		echo json_encode($data);
 	}
 }

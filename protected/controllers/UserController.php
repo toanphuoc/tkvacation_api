@@ -12,6 +12,9 @@ class UserController extends CController
 
 	public function actionLogout()
 	{	
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 		$token = new Token();
 		$t = $_GET['token'];
 
@@ -45,6 +48,8 @@ class UserController extends CController
 		$objUser = $user->getUserByUsername($username);
 
 		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 		if(!is_null($objUser))
 		{
 			if($objUser->validatePassword($password))

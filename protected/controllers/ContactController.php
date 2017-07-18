@@ -21,6 +21,8 @@ class ContactController extends CController
         $date = date("Y-m-d H:i:s");
         $model->date_created = $date;
     	header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
     	if($model->save()){
     		echo json_encode(array('status' => true));
     	}else{
@@ -31,6 +33,8 @@ class ContactController extends CController
     public function actionList()
     {
         header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
         $token = new Token();
         $token->_checkAuth();
 
@@ -76,7 +80,9 @@ class ContactController extends CController
 
         $model = Contact::model()->findByPk($_GET['id']);
         $model->is_read = true;
-
+        header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
         if($model->save())
         {
             echo json_encode(array('status' => true));

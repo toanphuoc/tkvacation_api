@@ -23,6 +23,8 @@ class DestinationController extends CController
 			$data[] = array('des' => $model, 'totalTours' => $totalTours);
 		}
 		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
         echo json_encode($data);
 	}
 
@@ -40,6 +42,8 @@ class DestinationController extends CController
 			$data[] = array('des' => $model, 'totalTours' => $totalTours);
 		}
 		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
         echo json_encode($data);
 	}
 
@@ -57,6 +61,8 @@ class DestinationController extends CController
 		}
 
 		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 		echo json_encode($data);
 	}
 }
