@@ -107,3 +107,6 @@ ADD COLUMN `date_created` DATETIME NULL AFTER `is_read`;
 ALTER TABLE `tkvacation`.`contact` 
 CHANGE COLUMN `is_read` `is_read` BIT(1) NULL DEFAULT false ;
 
+ALTER TABLE `tkvacation`.`contact` 
+CHANGE COLUMN `name` `name` VARCHAR(256) NOT NULL ;
+
