@@ -110,3 +110,26 @@ CHANGE COLUMN `is_read` `is_read` BIT(1) NULL DEFAULT false ;
 ALTER TABLE `tkvacation`.`contact` 
 CHANGE COLUMN `name` `name` VARCHAR(256) NOT NULL ;
 
+---------------------Blog table----------------------
+CREATE TABLE `blog` (
+  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `overview` text,
+  `date_created` datetime DEFAULT NULL,
+  `blog_name` varchar(256) NOT NULL,
+  `blog_img` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `tkvacation`.`blog` 
+CHANGE COLUMN `date_created` `date_created` DATETIME NULL DEFAULT now() ;
+
+CREATE TABLE `tkvacation`.`blog_images` (
+  `id` INT(8) NOT NULL AUTO_INCREMENT,
+  `url` VARCHAR(256) NULL,
+  `blog_id` INT(8) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_blog_image_blog_idx` (`blog_id` ASC),
+  CONSTRAINT `fk_blog_image_blog`
+    FOREIGN KEY (`blog_id`)
+    REFERENCES `tkvacation`.`blog` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

@@ -52,6 +52,10 @@ return array(
                 //API for booking
                 array('booking/create', 'pattern' => 'booking/create', 'verd' => 'POST'),
 
+                //API for blog
+                array('blog/list', 'pattern' => 'blog/list', 'verd' => 'GET'),
+                array('blog/getBlog/<id:\d+>', 'pattern' => 'blog/getBlog/<id:\d+>', 'verd' => 'GET'),
+
                 //API for login
                 array('user/login', 'pattern' => 'user/login', 'verd' => 'POST'),
                 array('user/logout', 'pattern' => 'user/logout', 'verd' => 'POST'),
