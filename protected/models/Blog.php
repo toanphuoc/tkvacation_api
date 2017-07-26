@@ -61,6 +61,11 @@ class Blog extends CActiveRecord
 
 	public function getBlogById($id)
 	{
-		return Blog::model()->findByPk($id);
+		$blog = Blog::model()->findByPk($id);
+		$blog_img = new Blog_Images();
+
+		$imgs = $blog_img->getBlogImages($id);
+
+		return array('blog' => $blog, 'imgs' => $imgs);
 	}
 }
