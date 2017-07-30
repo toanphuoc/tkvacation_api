@@ -59,6 +59,18 @@ class Blog extends CActiveRecord
     	return array('blogs' => $model, 'page' => $page);
 	}
 
+	public function getOtherBlog($id)
+	{
+		$criteria=new CDbCriteria();
+		$criteria->order = 'date_created DESC';
+		$criteria->condition = "id != :id";
+		$criteria->limit = 5;
+		$criteria->params=(array(':id'=>$id));
+		$data = Blog::model()->findAll($criteria);
+
+		return $data;
+	}
+
 	public function getBlogById($id)
 	{
 		$blog = Blog::model()->findByPk($id);

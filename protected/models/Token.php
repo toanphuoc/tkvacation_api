@@ -122,4 +122,20 @@ class Token extends CActiveRecord
             exit();
         }
 	}
+
+    public function checkValidToken($token)
+    {
+        if(!$this->isValidToken($token))
+        {
+            echo json_encode(array('status' => false, "message" => 'Token is invalid.'));
+            exit();
+        }
+
+        $model = Token::model()->findByPk($token);
+        if(is_null($model))
+        {
+            echo json_encode(array('status' => false, 'message' => 'Token is incorrect'));
+            exit();
+        }
+    }
 }

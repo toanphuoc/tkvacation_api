@@ -29,4 +29,16 @@ class BlogController extends CController
 
                 echo json_encode($blog->getBlogById($id));
 	}
+
+        public function actionOther()
+        {
+                header('Content-Type: application/json');
+                header("Access-Control-Allow-Origin: *");
+                header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+                $id = $_GET['id'];
+                $blog = new Blog();
+
+                echo json_encode($blog->getOtherBlog($id));
+        }
 }

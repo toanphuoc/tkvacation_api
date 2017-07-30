@@ -18,19 +18,9 @@ class UserController extends CController
 		$token = new Token();
 		$t = $_GET['token'];
 
-		if(!$token->isValidToken($t))
-        {
-            echo json_encode(array("message" => 'Token is invalid.'));
-            exit();
-        }
-
+		$token->checkValidToken($t);
 		$model = Token::model()->findByPk($t);
-		if(is_null($model))
-		{
-			echo json_encode(array('status' => false, 'message' => 'Token is incorrect'));
-			exit();
-		}
-		else if($model->delete())
+		if($model->delete())
 		{
 			echo json_encode(array('status' => true, 'message' => 'Logout is successful'));
 			exit();

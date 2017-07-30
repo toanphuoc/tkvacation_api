@@ -11,6 +11,8 @@ class Destinations extends CActiveRecord
 
 	public $img;
 
+	public $status;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

@@ -133,3 +133,8 @@ CREATE TABLE `tkvacation`.`blog_images` (
     REFERENCES `tkvacation`.`blog` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+----------------------For cms-----------------
+ALTER TABLE `tkvacation`.`destinations` 
+ADD COLUMN `status` BIT(1) NULL DEFAULT 1 AFTER `title`;
+

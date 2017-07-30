@@ -40,6 +40,8 @@ return array(
                 array('destination/list', 'pattern' => 'destination/list', 'verb' => 'GET'),
                 array('destination/getOtherDestination/<id:\d+>', 'pattern' => 'destination/getOtherDestination/<id:\d+>', 'verb' => 'GET'),
                 array('destination/getPopularDestination', 'pattern' => 'destination/getPopularDestination', 'verb' => 'GET'),
+                array('destination/getDestinationById/<id:\d+>', 'pattern' => 'destination/getDestinationById/<id:\d+>', 'verb' => 'GET'),
+                array('destination/update', 'pattern' => 'destination/update', 'verb' => 'POST'),
 
                 //API for Contact
                 array('contact/create', 'pattern' => 'contact/create', 'verb' => 'POST'),
@@ -54,6 +56,7 @@ return array(
 
                 //API for blog
                 array('blog/list', 'pattern' => 'blog/list', 'verd' => 'GET'),
+                array('blog/other/<id:\d+>', 'pattern' => 'blog/other/<id:\d+>', 'verd' => 'GET'),
                 array('blog/getBlog/<id:\d+>', 'pattern' => 'blog/getBlog/<id:\d+>', 'verd' => 'GET'),
 
                 //API for login
