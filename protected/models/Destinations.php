@@ -23,9 +23,19 @@ class Destinations extends CActiveRecord
 		return $models;
 	}
 
+	public function getAvailableDestination()
+	{
+		$criteria=new CDbCriteria();
+		$criteria->order = 'title';
+		$criteria->condition = "status = true";
+
+		return Destinations::model()->findAll($criteria);
+	}
+
 	public function popularDestination(){
 		$criteria=new CDbCriteria();
 		$criteria->limit = 5;
+		$criteria->condition = "status = true";
 		return Destinations::model()->findAll($criteria);
 	}
 
@@ -34,7 +44,12 @@ class Destinations extends CActiveRecord
 	}
 
 	public function getOtherDestination($id){
-		return Destinations::model()->findAll('id != :id', array('id' => $id));
+		$criteria=new CDbCriteria();
+		// $criteria->condition = "status = true";
+		$criteria->condition = 'status = true and id != :id';
+		$criteria->params=(array(':id'=>$id));
+
+		return Destinations::model()->findAll($criteria);
 	}
 
 	public function relations(){

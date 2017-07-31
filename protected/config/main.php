@@ -38,10 +38,14 @@ return array(
 
                  //API for destination
                 array('destination/list', 'pattern' => 'destination/list', 'verb' => 'GET'),
+                array('destination/listAvailable', 'pattern' => 'destination/listAvailable', 'verb' => 'GET'),
                 array('destination/getOtherDestination/<id:\d+>', 'pattern' => 'destination/getOtherDestination/<id:\d+>', 'verb' => 'GET'),
                 array('destination/getPopularDestination', 'pattern' => 'destination/getPopularDestination', 'verb' => 'GET'),
                 array('destination/getDestinationById/<id:\d+>', 'pattern' => 'destination/getDestinationById/<id:\d+>', 'verb' => 'GET'),
                 array('destination/update', 'pattern' => 'destination/update', 'verb' => 'POST'),
+                array('destination/changeStatus', 'pattern' => 'destination/changeStatus', 'verb' => 'POST'),
+                array('destination/create', 'pattern' => 'destination/create', 'verb' => 'POST'),
+
 
                 //API for Contact
                 array('contact/create', 'pattern' => 'contact/create', 'verb' => 'POST'),

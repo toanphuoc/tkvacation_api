@@ -10,11 +10,36 @@ class DestinationController extends CController
 
 	}
 
+	/**
+		* Get all destination 
+	*/
 	public function actionList(){
+
+		//Check access token
+		$token = new Token();
+		$t = $_GET['token'];
+
+		$token->checkValidToken($t);
+
+		$destination = new Destinations();
+
+		$models = $destination->getAll();
+
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+        echo json_encode($models);
+	}
+
+	/**
+		* Get all available destination
+	*/
+	public function actionListAvailable()
+	{
 		$destination = new Destinations();
 		$tour = new Tours();
 
-		$models = $destination->getAll();
+		$models = $destination->getAvailableDestination();
 
 		$data = array();
 		foreach ($models as $model) {
@@ -28,6 +53,92 @@ class DestinationController extends CController
         echo json_encode($data);
 	}
 
+	/**
+		* Change status destination
+	*/
+	public function actionChangeStatus()
+	{
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+		$token = new Token();
+		$t = $_GET['token'];
+
+		$token->checkValidToken($t);
+		$id = $_GET['id'];
+
+		$model = Destinations::model()->findByPk($id);
+		if(is_null($model))
+		{
+			echo json_encode(array('status' => false, 'message' => 'Data hem co.'));
+			exit();
+		}
+
+		$status = $_GET['status'];
+		$model->status = $status;
+
+		if($model->save()){
+			echo json_encode(array('status' => true));
+    	}else{
+    		echo json_encode(array('status' => false));
+    	}
+	}
+
+	/**
+		* Create destination
+	*/
+	public function actionCreate()
+	{
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+		$token = new Token();
+		$t = $_GET['token'];
+
+		$token->checkValidToken($t);
+
+		$model = new Destinations();
+
+		$title = $_POST['title'];
+		$model->title = $title;
+
+		$status = $_POST['status'];
+		$model->status = $status;
+
+		$file = $_FILES['file'];
+
+		//Move file to img folder
+		$urlBase = $_SERVER['DOCUMENT_ROOT'].'/img/';
+		$filename = time().$file["name"];
+		
+		$Moved = move_uploaded_file($_FILES["file"]["tmp_name"], $urlBase.$filename);
+		// var_dump($file);
+		
+		if($Moved)
+		{
+			//Delete old image
+			$oldImage = $_SERVER['DOCUMENT_ROOT'].'/'.$model->img;
+
+			$model->img = 'img/'.$filename;
+		}
+		else{
+			echo json_encode(array('status' => false, 'message' => 'Error when copy file updated'));
+			exit();
+		}
+
+		if($model->save()){
+			echo json_encode(array('status' => true));
+    	}else{
+    		echo json_encode(array('status' => false));
+    	}
+	}
+
+	/**
+		*	Update information of destination
+		*
+	*/
 	public function actionUpdate()
 	{
 		header('Content-Type: application/json');
@@ -41,10 +152,17 @@ class DestinationController extends CController
 		$id = $_GET['id'];
 
 		$model = Destinations::model()->findByPk($id);
+		if(is_null($model))
+		{
+			echo json_encode(array('status' => false, 'message' => 'Data hem co.'));
+			exit();
+		}
 		
 		$title = $_POST['title'];
 		$model->title = $title;
 
+		$status = $_POST['status'];
+		$model->status = $status;
 
 		if(isset($_FILES['file']))
 		{
@@ -70,7 +188,7 @@ class DestinationController extends CController
 				$model->img = 'img/'.$filename;
 			}
 			else{
-				echo json_encode(array('status' => false, 'message' => 'Error when copy file updated'));;
+				echo json_encode(array('status' => false, 'message' => 'Error when copy file updated'));
 				exit();
 			}
 		}
@@ -82,6 +200,9 @@ class DestinationController extends CController
     	}
 	}
 
+	/**
+		* Get destination by primary key
+	*/
 	public function actionGetDestinationById()
 	{
 		header('Content-Type: application/json');
@@ -95,6 +216,9 @@ class DestinationController extends CController
 		echo json_encode($model);
 	}
 
+	/**
+		* Get all available destinations expection one 
+	*/
 	public function actionGetOtherDestination(){
 		$destination = new Destinations();
 		$tour = new Tours();
@@ -114,6 +238,9 @@ class DestinationController extends CController
         echo json_encode($data);
 	}
 
+	/**
+		* Get popular destinations
+	*/
 	public function actionGetPopularDestination(){
 
 		$destination = new Destinations();

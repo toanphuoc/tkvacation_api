@@ -35,21 +35,13 @@ class ContactController extends CController
         header('Content-Type: application/json');
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+        
         $token = new Token();
-        $token->_checkAuth();
+        $t = $_GET['token'];
 
-        if(!isset($_GET['token']))
-        {
-            echo json_encode(array("message" => 'Token is required.'));
-            exit();
-        }
+        $token->checkValidToken($t);
 
        
-        if(!$token->isValidToken($_GET['token']))
-        {
-            echo json_encode(array("message" => 'Token is invalid.'));
-            exit();
-        }
 
         $currentPage = (isset($_GET['page']) ? $_GET['page'] : 1);
         $contact = new Contact();
