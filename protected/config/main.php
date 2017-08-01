@@ -51,6 +51,7 @@ return array(
                 array('contact/create', 'pattern' => 'contact/create', 'verb' => 'POST'),
                 array('contact/list?page=<page:\d+>', 'pattern' => 'contact/list?page=<page:\d+>', 'verd' => 'GET'),
                 array('contact/updateIsRead', 'pattern' => 'contact/updateIsRead', 'verd' => 'PUT'),
+                array('contact/delete', 'pattern' => 'contact/delete', 'verd' => 'POST'),
 
                 //API for Customize Tour
                 array('customizetour/create', 'pattern' => 'customizetour/create', 'verb' => 'POST'),

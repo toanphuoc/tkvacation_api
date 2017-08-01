@@ -48,7 +48,7 @@ class Contact extends CActiveRecord
 	{
 		$criteria = new CDbCriteria();
 		$criteria->order = 'date_created desc';
-		$count = Tours::model()->count($criteria);
+		$count = Contact::model()->count($criteria);
 
 		$pages=new CPagination($count);
 		$pages->pageSize=$pageSize;

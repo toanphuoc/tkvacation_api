@@ -41,22 +41,22 @@ class ContactController extends CController
 
         $token->checkValidToken($t);
 
-       
-
         $currentPage = (isset($_GET['page']) ? $_GET['page'] : 1);
         $contact = new Contact();
         
         echo json_encode($contact->getList(20, $currentPage));
     }
 
-    public function actionUpdateIsRead()
+    public function actionDelete()
     {
+        header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
         $token = new Token();
-        if(!isset($_GET['token']))
-        {
-            echo json_encode(array("message" => 'Token is required.'));
-            exit();
-        }
+        $t = $_GET['token'];
+
+        $token->checkValidToken($t);
 
         if(!isset($_GET['id']))
         {
@@ -64,17 +64,51 @@ class ContactController extends CController
             exit();
         }
 
-        if(!$token->isValidToken($_GET['token']))
+        $model = Contact::model()->findByPk($_GET['id']);
+
+        if(is_null($model))
         {
-            echo json_encode(array("message" => 'Token is invalid.'));
+            echo json_encode(array('status' => false, 'message' => 'Data hem co.'));
+            exit();
+        }
+
+        if($model->delete())
+        {
+            echo json_encode(array('status' => true));
+        }
+        else
+        {
+            echo json_encode(array('status' => false));
+        }
+    }
+
+    public function actionUpdateIsRead()
+    {
+        header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+        $token = new Token();
+        $t = $_GET['token'];
+
+        $token->checkValidToken($t);
+
+        if(!isset($_GET['id']))
+        {
+            echo json_encode(array("message" => 'Id Contact is required.'));
             exit();
         }
 
         $model = Contact::model()->findByPk($_GET['id']);
+
+        if(is_null($model))
+        {
+            echo json_encode(array('status' => false, 'message' => 'Data hem co.'));
+            exit();
+        }
+
         $model->is_read = true;
-        header('Content-Type: application/json');
-        header("Access-Control-Allow-Origin: *");
-        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+        
         if($model->save())
         {
             echo json_encode(array('status' => true));
