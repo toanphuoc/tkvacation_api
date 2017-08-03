@@ -55,18 +55,21 @@ class TourController extends CController
 	}
 
 	public function actionGetList(){
-		$tours = new Tours();
-		if(isset($_GET['currenetPage']))
-		{
-			$currentPage = $_GET['currenetPage'];
-		}else{
-			$currentPage = 1;
-		}
-		
-		$models = $tours->getList(5, $currentPage);
+
 		header('Content-Type: application/json');
 		header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+		$token = new Token();
+        $t = $_GET['token'];
+
+        $token->checkValidToken($t);
+
+		$tours = new Tours();
+		$currentPage = (isset($_GET['page']) ? $_GET['page'] : 1);
+		
+		$models = $tours->getList(15, $currentPage);
+		
 		echo json_encode($models);
 	}
 
@@ -112,5 +115,28 @@ class TourController extends CController
 		header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 		echo json_encode($data);
+	}
+
+	/**
+		*	Order tour by destination 
+	*/
+	public function actionTourByDestination()
+	{
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+        $token = new Token();
+        $t = $_GET['token'];
+
+        $token->checkValidToken($t);
+
+        $currentPage = (isset($_GET['page']) ? $_GET['page'] : 1);
+
+        $desId = $_GET['destinationId'];
+
+        $tour = new Tours();
+        $model = $tour->getListByDestination($desId, 15, $currentPage);
+        echo json_encode($model);
 	}
 }

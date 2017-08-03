@@ -138,3 +138,5 @@ CREATE TABLE `tkvacation`.`blog_images` (
 ALTER TABLE `tkvacation`.`destinations` 
 ADD COLUMN `status` BIT(1) NULL DEFAULT 1 AFTER `title`;
 
+ALTER TABLE `tkvacation`.`tours` 
+ADD COLUMN `status` BIT(1) NULL DEFAULT true AFTER `price_detail`;
