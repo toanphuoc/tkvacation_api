@@ -20,6 +20,7 @@ class ContactController extends CController
         date_default_timezone_set("Asia/Ho_Chi_Minh");
         $date = date("Y-m-d H:i:s");
         $model->date_created = $date;
+        $model->is_read = '0';
     	header('Content-Type: application/json');
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");

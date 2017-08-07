@@ -140,3 +140,23 @@ ADD COLUMN `status` BIT(1) NULL DEFAULT 1 AFTER `title`;
 
 ALTER TABLE `tkvacation`.`tours` 
 ADD COLUMN `status` BIT(1) NULL DEFAULT true AFTER `price_detail`;
+
+update tours set availability = NULL where id >= 1;
+  ALTER TABLE `tkvacation`.`tours` 
+CHANGE COLUMN `availability` `availability` DATETIME NULL DEFAULT now() ;
+update tours set availability = now() where id >= 1;
+
+
+ALTER TABLE `tkvacation`.`contact` 
+ADD COLUMN `status_temp` ENUM('1', '0') NULL DEFAULT '0';
+ALTER TABLE `tkvacation`.`contact` 
+DROP COLUMN `is_read`;
+ALTER TABLE `tkvacation`.`contact` 
+CHANGE COLUMN `status_temp` `is_read` ENUM('1', '0') NULL DEFAULT '0' ;
+
+ALTER TABLE `tkvacation`.`destinations` 
+ADD COLUMN `status_temp` ENUM('1', '0') NULL DEFAULT '1';
+ALTER TABLE `tkvacation`.`destinations` 
+DROP COLUMN `status`;
+ALTER TABLE `tkvacation`.`destinations` 
+CHANGE COLUMN `status_temp` `status` ENUM('1', '0') NULL DEFAULT '1' ;
