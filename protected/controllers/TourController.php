@@ -11,6 +11,156 @@ class TourController extends CController
 
 	}
 
+	public function actionChangeStatus()
+	{
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+		$token = new Token();
+		$t = $_GET['token'];
+
+		$token->checkValidToken($t);
+		$id = $_GET['id'];
+
+		$model = Tours::model()->findByPk($id);
+		if(is_null($model))
+		{
+			echo json_encode(array('status' => false, 'message' => 'Data hem co.'));
+			exit();
+		}
+
+		$status = $_GET['status'];
+		$model->status = $status;
+
+		if($model->save()){
+			echo json_encode(array('status' => true));
+    	}else{
+    		echo json_encode(array('status' => false));
+    	}
+	}
+
+	public function actionCreate()
+	{
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+		$token = new Token();
+		$t = $_GET['token'];
+
+		$token->checkValidToken($t);
+
+		$model = new Tours();
+
+		$model->name = $_POST["name"];
+		$model->period = $_POST["period"];
+		$model->availability = $_POST["availability"];
+		$model->overview = $_POST["overview"];
+		$model->price = $_POST["price"];
+		$model->destination_id = $_POST["destination_id"];
+		$model->price_vnd = $_POST["price_vnd"];
+		$model->price_detail = $_POST["price_detail"];
+		$model->status = $_POST["status"];
+		$model->itinerary = $_POST["itinerary"];
+		$model->booking = 0;
+
+		if(isset($_FILES['file']))
+		{
+			$file = $_FILES['file'];
+
+			//Move file to img folder
+			$urlBase = $_SERVER['DOCUMENT_ROOT'].'/img/';
+			$filename = time().$file["name"];
+			
+			$Moved = move_uploaded_file($_FILES["file"]["tmp_name"], $urlBase.$filename);
+			// var_dump($file);
+			
+			if($Moved)
+			{
+
+				$model->img = 'img/'.$filename;
+			}
+			else{
+				echo json_encode(array('status' => false, 'message' => "Not uploaded because of error #".$_FILES["file"]["error"]));
+				exit();
+			}
+		}
+
+		if($model->save()){
+			echo json_encode(array('status' => true));
+    	}else{
+    		echo json_encode(array('status' => false));
+    	}
+	}
+
+	public function actionEdit()
+	{
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+		$token = new Token();
+		$t = $_GET['token'];
+
+		$token->checkValidToken($t);
+		$id = $_GET['id'];
+
+		$model = Tours::model()->findByPk($id);
+		if(is_null($model))
+		{
+			echo json_encode(array('status' => false, 'message' => 'Data hem co.'));
+			exit();
+		}
+
+		$model->name = $_POST["name"];
+		$model->period = $_POST["period"];
+		$model->availability = $_POST["availability"];
+		$model->overview = $_POST["overview"];
+		$model->price = $_POST["price"];
+		$model->destination_id = $_POST["destination_id"];
+		$model->price_vnd = $_POST["price_vnd"];
+		$model->price_detail = $_POST["price_detail"];
+		$model->itinerary = $_POST["itinerary"];
+		$model->status = $_POST["status"];
+
+		if(isset($_FILES['file']))
+		{
+			$file = $_FILES['file'];
+
+			//Move file to img folder
+			$urlBase = $_SERVER['DOCUMENT_ROOT'].'/img/';
+			$filename = time().$file["name"];
+			
+			$Moved = move_uploaded_file($_FILES["file"]["tmp_name"], $urlBase.$filename);
+			// var_dump($file);
+			
+			if($Moved)
+			{
+				//Delete old image
+				$oldImage = $_SERVER['DOCUMENT_ROOT'].'/'.$model->img;
+
+				if(file_exists($oldImage))
+				{
+					unlink($oldImage);
+				}
+
+				$model->img = 'img/'.$filename;
+			}
+			else{
+				echo json_encode(array('status' => false, 'message' => "Not uploaded because of error #".$_FILES["file"]["error"]));
+				exit();
+			}
+		}
+
+		if($model->save()){
+			echo json_encode(array('status' => true));
+    	}else{
+    		echo json_encode(array('status' => false));
+    	}
+
+	}
+
 	public function actionSearchTour(){
 
 		$currentPage = (isset($_GET['page']) ? $_GET['page'] : 1);
@@ -103,18 +253,15 @@ class TourController extends CController
 		$id = $_GET['id'];
 
 		$tour = new Tours();
-		$itinerary = new Itinerary();
-
-		$data = array();
 
 		$models = $tour->getTourById($id);
 
-		$data = array('tour' => $models, 'itinerary' => $itinerary->getItinerayOfTour($id));
+		// $data = array('tour' => $models, 'itinerary' => $itinerary->getItinerayOfTour($id));
 
 		header('Content-Type: application/json');
 		header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
-		echo json_encode($data);
+		echo json_encode($models);
 	}
 
 	/**

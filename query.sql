@@ -160,3 +160,61 @@ ALTER TABLE `tkvacation`.`destinations`
 DROP COLUMN `status`;
 ALTER TABLE `tkvacation`.`destinations` 
 CHANGE COLUMN `status_temp` `status` ENUM('1', '0') NULL DEFAULT '1' ;
+
+ALTER TABLE `tkvacation`.`tours` 
+ADD COLUMN `status_temp` ENUM('1', '0') NULL DEFAULT '1';
+ALTER TABLE `tkvacation`.`tours` 
+DROP COLUMN `status`;
+ALTER TABLE `tkvacation`.`tours` 
+CHANGE COLUMN `status_temp` `status` ENUM('1', '0') NULL DEFAULT '1' ;
+
+---------------------------
+ALTER TABLE `tkvacation`.`tours` 
+ADD COLUMN `itinerary` TEXT NULL AFTER `status`;
+
+DROP TABLE `tkvacation`.`itinerary`;
+
+CREATE TABLE `tkvacation`.`about` (
+  `content` TEXT NOT NULL,
+  `id` INT(8) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`));
+
+ALTER TABLE `tkvacation`.`customize_tour` 
+ADD COLUMN `date_created` DATETIME NULL DEFAULT now() AFTER `ideas`;
+
+ALTER TABLE `tkvacation`.`customize_tour` 
+ADD COLUMN `is_read` ENUM('1', '0') NULL DEFAULT '0' AFTER `date_created`;
+
+ALTER TABLE `tkvacation`.`blog` 
+ADD COLUMN `status` ENUM('1', '0') NULL DEFAULT '1' AFTER `blog_img`;
+
+ALTER TABLE `tkvacation`.`booking` 
+ADD COLUMN `date_created` DATETIME NULL DEFAULT now() AFTER `is_check`;
+
+ALTER TABLE `tkvacation`.`destinations` 
+ADD COLUMN `status_temp` ENUM('1', '0') NULL DEFAULT '1';
+ALTER TABLE `tkvacation`.`destinations` 
+DROP COLUMN `status`;
+ALTER TABLE `tkvacation`.`destinations` 
+CHANGE COLUMN `status_temp` `status` ENUM('1', '0') NULL DEFAULT '1' ;
+
+ALTER TABLE `tkvacation`.`booking` 
+ADD COLUMN `status_temp` ENUM('1', '0') NULL DEFAULT '0';
+ALTER TABLE `tkvacation`.`booking` 
+DROP COLUMN `is_check`;
+ALTER TABLE `tkvacation`.`booking` 
+CHANGE COLUMN `status_temp` `is_check` ENUM('1', '0') NULL DEFAULT '0' ;
+
+CREATE TABLE `tkvacation`.`email_notification` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(256) NOT NULL,
+  `first_name` VARCHAR(100) NOT NULL,
+  `last_name` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`));
+
+INSERT INTO `tkvacation`.`email_notification` (`email`, `first_name`, `last_name`) VALUES ('toanhcmus@gmail.com', 'Toan', 'Nguyen');
+
+
+
+
+

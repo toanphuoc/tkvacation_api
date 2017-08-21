@@ -5,7 +5,28 @@
 */
 class Booking extends CActiveRecord
 {
-	
+	public $id;
+
+	public $tour_id;
+
+	public $start_date;
+
+	public $number_of_people;
+
+	public $first_name;
+
+	public $last_name;
+
+	public $email;
+
+	public $phone;
+
+	public $country;
+
+	public $is_check;
+
+	public $date_created;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -24,7 +45,8 @@ class Booking extends CActiveRecord
 			"phone" => "Phone", 
 			"country" => "Country",
 			"note" => "Note",
-			"is_check" => "Checked"
+			"is_check" => "Checked",
+			"date_created" => "Date Created"
 		);
 	}
 
@@ -37,5 +59,22 @@ class Booking extends CActiveRecord
 	public function relations()
 	{
 		return array('tour_id' => array(self::BELONGS_TO, 'Tourrs', 'tour_id'),);
+	}
+
+	public function getList($pageSize, $currentPage)
+	{
+		$criteria = new CDbCriteria();
+		$criteria->order = 'date_created desc';
+		$count = Booking::model()->count($criteria);
+
+		$pages=new CPagination($count);
+		$pages->pageSize=$pageSize;
+		$pages->setCurrentPage($currentPage - 1);
+    	$pages->applyLimit($criteria);
+
+    	$model = Booking::model()->findAll($criteria);
+
+    	$page = array('totalPage' => $pages->getPageCount(), 'currentPage' => $pages->getCurrentPage() + 1);
+    	return array('booking' => $model, 'page' => $page);
 	}
 }

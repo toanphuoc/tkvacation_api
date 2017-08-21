@@ -124,7 +124,7 @@ class DestinationController extends CController
 			$model->img = 'img/'.$filename;
 		}
 		else{
-			echo json_encode(array('status' => false, 'message' => 'Error when copy file updated'));
+			echo json_encode(array('status' => false, 'message' => "Not uploaded because of error #".$_FILES["file"]["error"]));
 			exit();
 		}
 
@@ -188,7 +188,7 @@ class DestinationController extends CController
 				$model->img = 'img/'.$filename;
 			}
 			else{
-				echo json_encode(array('status' => false, 'message' => 'Error when copy file updated'));
+				echo json_encode(array('status' => false, 'message' => "Not uploaded because of error #".$_FILES["file"]["error"]));
 				exit();
 			}
 		}

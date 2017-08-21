@@ -36,7 +36,10 @@ return array(
                 array('tour/searchTour?keySearch=<keySearch:\w+>&desId=<desId:\d+>&periodMin=<pMin:\d+>&periodMax=<pMax:\d+>&priceMin=<priceMin:\d+>&priceMax=<priceMax:\d+>', 
                     'pattern' => 'tour/searchTour?keySearch=<keySearch:\w+>&desId=<desId:\d+>&periodMin=<pMin:\d+>&periodMax=<pMax:\d+>&priceMin=<priceMin:\d+>&priceMax=<priceMax:\d+>', 'verb' => 'GET'),
                 array('tour/tourByDestination', 'pattern' => 'tour/tourByDestination', 'verb' => 'GET'),
-
+                array('tour/edit', 'pattern' => 'tour/edit', 'verb' => 'POST'),
+                array('tour/create', 'pattern' => 'tour/create', 'verb' => 'POST'),
+                array('tour/changeStatus', 'pattern' => 'tour/changeStatus', 'verb' => 'POST'),
+                
                  //API for destination
                 array('destination/list', 'pattern' => 'destination/list', 'verb' => 'GET'),
                 array('destination/listAvailable', 'pattern' => 'destination/listAvailable', 'verb' => 'GET'),
@@ -56,18 +59,32 @@ return array(
 
                 //API for Customize Tour
                 array('customizetour/create', 'pattern' => 'customizetour/create', 'verb' => 'POST'),
+                array('customizetour/getList', 'pattern' => 'customizetour/getList', 'verb' => 'GET'),
+                array('customizetour/getCustomizeTourById', 'pattern' => 'customizetour/getCustomizeTourById', 'verb' => 'GET'),
+                array('customizetour/delete', 'pattern' => 'customizetour/delete', 'verb' => 'POST'),
 
                 //API for booking
                 array('booking/create', 'pattern' => 'booking/create', 'verd' => 'POST'),
+                array('booking/getList', 'pattern' => 'booking/getList', 'verd' => 'GET'),
+                array('booking/getBookingById', 'pattern' => 'booking/getBookingById', 'verd' => 'GET'),
+                array('booking/delete', 'pattern' => 'booking/delete', 'verd' => 'DELETE'),
 
                 //API for blog
                 array('blog/list', 'pattern' => 'blog/list', 'verd' => 'GET'),
+                array('blog/getList', 'pattern' => 'blog/getList', 'verd' => 'GET'),
                 array('blog/other/<id:\d+>', 'pattern' => 'blog/other/<id:\d+>', 'verd' => 'GET'),
                 array('blog/getBlog/<id:\d+>', 'pattern' => 'blog/getBlog/<id:\d+>', 'verd' => 'GET'),
+                array('blog/changeStatus', 'pattern' => 'blog/changeStatus', 'verd' => 'PUT'),
+                array('blog/edit', 'pattern' => 'blog/edit', 'verd' => 'POST'),
 
                 //API for login
                 array('user/login', 'pattern' => 'user/login', 'verd' => 'POST'),
                 array('user/logout', 'pattern' => 'user/logout', 'verd' => 'POST'),
+
+                array('about/getAboutContent', 'pattern' => 'about/getAboutContent', 'verd' => 'GET'),
+                array('about/editAboutContent', 'pattern' => 'about/editAboutContent', 'verd' => 'POST'),
+                array('about/editEmailNotification', 'pattern' => 'about/editEmailNotification', 'verd' => 'POST'),
+
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             )
         ),

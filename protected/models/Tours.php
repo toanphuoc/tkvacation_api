@@ -28,6 +28,8 @@ class Tours extends CActiveRecord{
 
 	public $status;
 
+	public $itinerary;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -117,6 +119,7 @@ class Tours extends CActiveRecord{
 		$criteria=new CDbCriteria();
 		$criteria->order='booking DESC';
 		$criteria->limit = $limit;
+		$criteria->condition = "status = true";
 		$criteria->order = 'date_created DESC';
 		$models = Tours::model()->findAll($criteria);
 		return $models;

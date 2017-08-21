@@ -15,6 +15,8 @@ class Blog extends CActiveRecord
 
 	public $blog_img;
 
+	public $status;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -27,7 +29,8 @@ class Blog extends CActiveRecord
 			"blog_name" => "Blog Name",
 			"overview" => "Overview",
 			"date_created" => "Date Created",
-			"blog_img" => "Blog Image"
+			"blog_img" => "Blog Image",
+			"status" => "Status"
 		);
 	}
 
@@ -42,10 +45,27 @@ class Blog extends CActiveRecord
 	// 	return '{{blog}}';
 	// }
 
+	public function getListBlogForAdmin($pageSize, $currentPage){
+		$criteria = new CDbCriteria();
+		$criteria->order = 'date_created desc';
+		$count = Blog::model()->count($criteria);
+
+		$pages=new CPagination($count);
+		$pages->pageSize=$pageSize;
+		$pages->setCurrentPage($currentPage - 1);
+    	$pages->applyLimit($criteria);
+
+    	$model = Blog::model()->findAll($criteria);
+
+    	$page = array('totalPage' => $pages->getPageCount(), 'currentPage' => $pages->getCurrentPage() + 1);
+    	return array('blogs' => $model, 'page' => $page);
+	}
+
 	public function getListBlog($pageSize, $currentPage)
 	{
 		$criteria = new CDbCriteria();
 		$criteria->order = 'date_created desc';
+		$criteria->condition = "status = 1";
 		$count = Blog::model()->count($criteria);
 
 		$pages=new CPagination($count);
@@ -63,7 +83,7 @@ class Blog extends CActiveRecord
 	{
 		$criteria=new CDbCriteria();
 		$criteria->order = 'date_created DESC';
-		$criteria->condition = "id != :id";
+		$criteria->condition = "id != :id and status = 1";
 		$criteria->limit = 5;
 		$criteria->params=(array(':id'=>$id));
 		$data = Blog::model()->findAll($criteria);
