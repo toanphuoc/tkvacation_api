@@ -76,10 +76,13 @@ return array(
                 array('blog/getBlog/<id:\d+>', 'pattern' => 'blog/getBlog/<id:\d+>', 'verd' => 'GET'),
                 array('blog/changeStatus', 'pattern' => 'blog/changeStatus', 'verd' => 'PUT'),
                 array('blog/edit', 'pattern' => 'blog/edit', 'verd' => 'POST'),
+                array('blog/delete', 'pattern' => 'blog/delete', 'verd' => 'DELETE'),
+                array('blog/addNewImageBlog', 'pattern' => 'blog/addNewImageBlog', 'verd' => 'POST'),
 
                 //API for login
                 array('user/login', 'pattern' => 'user/login', 'verd' => 'POST'),
                 array('user/logout', 'pattern' => 'user/logout', 'verd' => 'POST'),
+                array('user/changePassword', 'pattern' => 'user/changePassword', 'verd' => 'POST'),
 
                 array('about/getAboutContent', 'pattern' => 'about/getAboutContent', 'verd' => 'GET'),
                 array('about/editAboutContent', 'pattern' => 'about/editAboutContent', 'verd' => 'POST'),

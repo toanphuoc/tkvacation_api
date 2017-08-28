@@ -65,6 +65,9 @@ class TourController extends CController
 		$model->itinerary = $_POST["itinerary"];
 		$model->booking = 0;
 
+		date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $model->date_created = date("Y-m-d h:i:s");
+
 		if(isset($_FILES['file']))
 		{
 			$file = $_FILES['file'];

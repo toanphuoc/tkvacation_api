@@ -47,6 +47,12 @@ class BookingController extends CController
 
     	if($model->save()){
 
+            $tour_id = $model->tour_id;
+            $tour = Tours::model()->findByPk($tour_id);
+
+            $tour->booking = $tour->booking + 1;
+            $tour->save();
+
             $sendMail = $this->sendMailNotify($model);
 
     		echo json_encode(array('status' => true, 'message' => $sendMail));

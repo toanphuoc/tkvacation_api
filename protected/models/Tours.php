@@ -120,7 +120,6 @@ class Tours extends CActiveRecord{
 		$criteria->order='booking DESC';
 		$criteria->limit = $limit;
 		$criteria->condition = "status = true";
-		$criteria->order = 'date_created DESC';
 		$models = Tours::model()->findAll($criteria);
 		return $models;
 	}

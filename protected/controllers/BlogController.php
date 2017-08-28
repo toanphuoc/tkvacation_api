@@ -5,6 +5,87 @@
 */
 class BlogController extends CController
 {
+
+    public function actionAddNewImageBlog(){
+
+        header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+        $token = new Token();
+        $t = $_GET['token'];
+
+        $token->checkValidToken($t);
+        $model = new Blog_Images();
+
+        $model->blog_id = $_POST["blog_id"];
+
+        if(isset($_FILES['file']))
+        {
+            $file = $_FILES['file'];
+
+            //Move file to img folder
+            $urlBase = $_SERVER['DOCUMENT_ROOT'].'/img/';
+            $filename = time().$file["name"];
+            
+            $Moved = move_uploaded_file($_FILES["file"]["tmp_name"], $urlBase.$filename);
+            // var_dump($file);
+            
+            if($Moved)
+            {
+                $model->url = 'img/'.$filename;
+            }
+            else{
+                echo json_encode(array('status' => false, 'message' => "Not uploaded because of error #".$_FILES["file"]["error"]));
+                exit();
+            }
+        }else{
+            echo json_encode(array('status' => false));
+        }
+
+        if($model->save()){
+            echo json_encode(array('status' => true));
+        }else{
+            echo json_encode(array('status' => false));
+        }
+
+    }
+
+    public function actionDelete()
+    {
+        header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+        $token = new Token();
+        $t = $_GET['token'];
+
+        $token->checkValidToken($t);
+
+        $id = $_GET["id"];
+
+        $model = Blog_Images::model()->findByPk($id);
+        if(is_null($model)){
+            return json_encode(array('status' => false));
+        }
+
+        $img = $model->url;
+
+        if($model->delete()){
+
+            $oldImage = $_SERVER['DOCUMENT_ROOT'].'/'.$img;
+
+            if(file_exists($oldImage))
+            {
+                unlink($oldImage);
+            }
+
+            echo json_encode(array('status' => true));
+        }else{
+            echo json_encode(array('status' => false));
+        }
+    }
+
     public function actionGetLogImage()
     {
         header('Content-Type: application/json');
@@ -63,16 +144,16 @@ class BlogController extends CController
         }
 
         if($model->save()){
+            echo json_encode(array('status' => true));
+            // $blog_Images = new Blog_Images();
+            // $blog_Images->url = $model->blog_img;
+            // $blog_Images->blog_id = $model->id;
 
-            $blog_Images = new Blog_Images();
-            $blog_Images->url = $model->blog_img;
-            $blog_Images->blog_id = $model->id;
-
-            if($blog_Images->save()){
-                echo json_encode(array('status' => true));
-            }else{
-                echo json_encode(array('status' => false));
-            }
+            // if($blog_Images->save()){
+            //     echo json_encode(array('status' => true));
+            // }else{
+            //     echo json_encode(array('status' => false));
+            // }
         }else{
             echo json_encode(array('status' => false, 'message' => 'Error when save blog.'));
         }
