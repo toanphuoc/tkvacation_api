@@ -289,4 +289,98 @@ class TourController extends CController
         $model = $tour->getListByDestination($desId, 15, $currentPage);
         echo json_encode($model);
 	}
+
+	public function actionGetAllTourImages()
+	{
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+        
+		$tour_id = $_GET["tour_id"];
+
+		$model = new Tour_Images();
+		$data = $model->getImagesOfTour($tour_id);
+
+		echo json_encode($data);
+	}
+
+	public function actionCreateTourImages()
+	{
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+        $token = new Token();
+        $t = $_GET['token'];
+        $token->checkValidToken($t);
+
+        $obj = new Tour_Images();
+        $obj->tour_id = $_POST['tour_id'];
+
+        if(isset($_FILES['file']))
+		{
+			$file = $_FILES['file'];
+
+			//Move file to img folder
+			$urlBase = $_SERVER['DOCUMENT_ROOT'].'/img/';
+			$filename = time().$file["name"];
+			
+			$Moved = move_uploaded_file($_FILES["file"]["tmp_name"], $urlBase.$filename);
+			
+			if($Moved)
+			{
+
+				$obj->url = 'img/'.$filename;
+			}
+			else{
+				echo json_encode(array('status' => false, 'message' => "Not uploaded because of error #".$_FILES["file"]["error"]));
+				exit();
+			}
+		}
+
+		if($obj->save())
+		{
+			echo json_encode(array('status' => true));
+		}else{
+			echo json_encode(array('status' => false));
+		}
+	}
+
+	public function actionDeleteTourImages()
+	{
+		header('Content-Type: application/json');
+		header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+        $token = new Token();
+        $t = $_GET['token'];
+        $token->checkValidToken($t);
+
+        $obj = Tour_Images::model()->findByPk($_GET['id']);
+        if(is_null($obj))
+		{
+			echo json_encode(array('status' => false, 'message' => 'Data hem co.'));
+			exit();
+		}
+
+		$oldUrl = $obj->url;
+
+		if($obj->delete()){
+			try {
+				//Delete old image
+				$oldImage = $_SERVER['DOCUMENT_ROOT'].'/'.$oldUrl;
+
+				if(file_exists($oldImage))
+				{
+					unlink($oldImage);
+				}
+			} catch (Exception $e) {
+				
+			}
+			
+			echo json_encode(array('status' => true));
+		}else{
+			echo json_encode(array('status' => false));
+		}
+	}
 }

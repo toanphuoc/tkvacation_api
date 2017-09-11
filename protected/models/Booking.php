@@ -27,6 +27,8 @@ class Booking extends CActiveRecord
 
 	public $date_created;
 
+	public $title;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

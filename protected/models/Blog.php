@@ -37,7 +37,7 @@ class Blog extends CActiveRecord
 	public function rules()
 	{
 		return array(
-			array('blog_name, overview, date_created', 'required'),);
+			array('blog_name, date_created', 'required'),);
 	}
 
 	// public function tableName()

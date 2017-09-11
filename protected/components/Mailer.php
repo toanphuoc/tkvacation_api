@@ -1,6 +1,6 @@
 <?php
 
-// include __DIR__ .'../../library/PHPMailer/PHPMailerAutoload.php';
+include __DIR__ . '/../library/PHPMailer/class.phpmailer.php';
 include __DIR__ . '/../library/PHPMailer/PHPMailerAutoload.php';
 
 /**
@@ -14,14 +14,18 @@ class Mailer
 		$mail = new PHPMailer();
         $mail->isSMTP();
         $mail->Debugoutput = 'html';
-        $mail->Host = 'smtp.gmail.com';
-        $mail->Port = 587;
+        // $mail->Host = 'smtp.gmail.com';
+        $mail->Host = 'sg2plcpnl0057.prod.sin2.secureserver.net';
+        $mail->Port = 465;
 
-        $mail->SMTPSecure = 'tls';
+        $mail->SMTPSecure = 'ssl';
         $mail->SMTPAuth = true;
 
-        $mail->Username = "tkvacation2017@gmail.com";
-        $mail->Password = "Tuankhanh2017";
+        // $mail->Username = "tkvacation2017@gmail.com";
+        $mail->Username = 'contact@tkvacation.com';
+
+        // $mail->Password = "Tuankhanh2017";
+        $mail->Password = 'tkvacation';
 
         $mail->setFrom($from[0], $from[1]);
 

@@ -39,7 +39,10 @@ return array(
                 array('tour/edit', 'pattern' => 'tour/edit', 'verb' => 'POST'),
                 array('tour/create', 'pattern' => 'tour/create', 'verb' => 'POST'),
                 array('tour/changeStatus', 'pattern' => 'tour/changeStatus', 'verb' => 'POST'),
-                
+                array('tour/getAllTourImages', 'pattern' => 'tour/getAllTourImages', 'verb' => 'GET'),
+                array('tour/createTourImages', 'pattern' => 'tour/createTourImages', 'verb' => 'POST'),
+                array('tour/deleteTourImages', 'pattern' => 'tour/deleteTourImages', 'verb' => 'POST'),
+
                  //API for destination
                 array('destination/list', 'pattern' => 'destination/list', 'verb' => 'GET'),
                 array('destination/listAvailable', 'pattern' => 'destination/listAvailable', 'verb' => 'GET'),
@@ -87,6 +90,8 @@ return array(
                 array('about/getAboutContent', 'pattern' => 'about/getAboutContent', 'verd' => 'GET'),
                 array('about/editAboutContent', 'pattern' => 'about/editAboutContent', 'verd' => 'POST'),
                 array('about/editEmailNotification', 'pattern' => 'about/editEmailNotification', 'verd' => 'POST'),
+                array('about/createEmailNotify', 'pattern' => 'about/createEmailNotify', 'verd' => 'POST'),
+                array('about/deleteEmailNotify', 'pattern' => 'about/deleteEmailNotify', 'verd' => 'DELETE'),
 
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             )

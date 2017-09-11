@@ -214,6 +214,24 @@ CREATE TABLE `tkvacation`.`email_notification` (
 
 INSERT INTO `tkvacation`.`email_notification` (`email`, `first_name`, `last_name`) VALUES ('toanhcmus@gmail.com', 'Toan', 'Nguyen');
 
+---------------For Tour Images--------------
+CREATE TABLE `tkvacation`.`tour_images` (
+  `id` INT(8) NOT NULL AUTO_INCREMENT,
+  `url` VARCHAR(255) NOT NULL,
+  `tour_id` INT(8) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_tour_imags_tour_idx` (`tour_id` ASC),
+  CONSTRAINT `fk_tour_imags_tour`
+    FOREIGN KEY (`tour_id`)
+    REFERENCES `tkvacation`.`tours` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+---------For booking tilte contact information-----------
+ALTER TABLE `tkvacation`.`booking` 
+ADD COLUMN `title` ENUM('1', '2') NULL DEFAULT '1' AFTER `is_check`;
+
+
 
 
 
